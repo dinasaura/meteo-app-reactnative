@@ -3,6 +3,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import Container from '../../components/Container.tsx';
 import {useNavigation} from '@react-navigation/native';
+import {CityData, citiesData} from './CitiesData/CitiesData.ts';
 
 export const HeaderSearchWrapper = styled.View`
   flex: 1;
@@ -34,6 +35,26 @@ export const StyledScrollView = styled.ScrollView`
   background-color: rgba(242, 242, 246, 1);
 `;
 
+const CityContainer = styled.View`
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+`;
+
+export const CountryText = styled.Text`
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 4px;
+`;
+
+const CityText = styled.Text`
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 12px;
+`;
+
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const navigateToSearchScreen = () => navigation.navigate('search');
@@ -47,9 +68,13 @@ const HomeScreen: React.FC = () => {
           </SearchWrapper>
         </HeaderSearchWrapper>
         <View style={{marginTop: 20}}>
-          <Text>Home Content</Text>
+          {citiesData.map(city => (
+            <CityContainer key={city.id}>
+            <CityText>{city.name}</CityText>
+            <CountryText>{city.country}</CountryText>
+          </CityContainer>
+          ))}
         </View>
-        
       </StyledScrollView>
     </Container>
   );
