@@ -1,11 +1,11 @@
-export interface CityData {
+export interface CityDataType {
     id: string;
     name: string;
     country: string;
     details: Record<string, any>; 
   }
 
-export const citiesData: CityData[] = [
+export const citiesData: CityDataType[] = [
     { id: '1', name: 'Londra', country: 'Regno Unito', details: {} },
     { id: '2', name: 'Parigi', country: 'Francia', details: {} },
     { id: '3', name: 'New York', country: "Stati Uniti d'America", details: {} },

@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import Container from '../../components/Container.tsx';
 import {useNavigation} from '@react-navigation/native';
-import {CityData, citiesData} from './CitiesData/CitiesData.ts';
+import {CityDataType, citiesData} from './data/citiesData.ts';
 
 export const HeaderSearchWrapper = styled.View`
   flex: 1;
@@ -35,7 +35,7 @@ export const StyledScrollView = styled.ScrollView`
   background-color: rgba(242, 242, 246, 1);
 `;
 
-const CityContainer = styled.View`
+export const CityContainer = styled.TouchableOpacity`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
@@ -59,6 +59,10 @@ const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const navigateToSearchScreen = () => navigation.navigate('search');
 
+  const navigateToCity = (cityName: string) => () => {
+    navigation.navigate('city', {name: cityName});
+  };
+
   return (
     <Container>
       <StyledScrollView>
@@ -69,7 +73,7 @@ const HomeScreen: React.FC = () => {
         </HeaderSearchWrapper>
         <View style={{marginTop: 20}}>
           {citiesData.map(city => (
-            <CityContainer key={city.id}>
+            <CityContainer key={city.id} onPress={navigateToCity(city.name)}>
             <CityText>{city.name}</CityText>
             <CountryText>{city.country}</CountryText>
           </CityContainer>

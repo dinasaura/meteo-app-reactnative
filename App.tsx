@@ -17,6 +17,7 @@ import SearchScreen from './src/screens/Search';
 import CityScreen from './src/screens/City';
 import HomeScreen from './src/screens/Home';
 import FavoritesScreen from './src/screens/Favorites';
+import FavoriteProvider from './src/providers/FavoriteProvider';
 
 enableScreens();
 
@@ -35,20 +36,33 @@ export const MainTabs = () => {
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name="tabs" component={MainTabs} />
-          <Stack.Screen name="city" component={CityScreen} />
-          <Stack.Screen
-            name="search"
-            options={{presentation: 'modal'}}
-            component={SearchScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <FavoriteProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}>
+            <Stack.Screen
+              name="tabs"
+              options={{title: 'Principale'}}
+              component={MainTabs}
+            />
+            <Stack.Screen
+              options={({route}) => ({
+                headerShown: true,
+                title: `Detaglio ${route.params.name}`,
+              })}
+              name="city"
+              component={CityScreen}
+            />
+            <Stack.Screen
+              name="search"
+              options={{presentation: 'modal'}}
+              component={SearchScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoriteProvider>
     </SafeAreaProvider>
   );
 }
