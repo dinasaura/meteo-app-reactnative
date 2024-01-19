@@ -93,6 +93,7 @@ export const CityContainer = styled.TouchableOpacity`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
+  margin-top: 5px;
 `;
 
 export const CountryText = styled.Text`
@@ -111,6 +112,7 @@ export const CityText = styled.Text`
   color: black;
   margin-bottom: 10px;
 `;
+
 
 export const TextDate = styled.Text`
   font-size: 15px;

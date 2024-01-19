@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ActivityIndicator} from 'react-native';
 import {RootStackScreenProps} from '../../types';
 import useFavoritesCities from '../../hooks/useFavoritesCities';
 import { CityDataType } from '../Home/data/citiesData';
@@ -50,8 +50,6 @@ const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
         const forecastResponse = await axios.get(
           `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${name}&days=7&aqi=no&alerts=yes`
         );
-        console.log('Risposta API Previsione:', forecastResponse.data);
-
         setWeatherData(response.data);
         setSevenDayForecast(forecastResponse.data.forecast?.forecastday);
         
@@ -60,12 +58,12 @@ const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
       }
     };
     getWeatherData();
-  }, []);
+  }, [name]);
 
   return (
 <Wrapper>
     <Text>App Meteo for city {name}</Text>
-    {weatherData && (
+    {weatherData ? (
       <View>
         <CityInfoContainer>
         <View>
@@ -110,10 +108,12 @@ const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
             </ButtonText>
           </AddToFavoritesButton>
         </View>
+    ):(
+      <ActivityIndicator/>
     )}
     {sevenDayForecast && (
   <CityContainerSevenDays>
-    <Text >Previsione a Sette Giorni:</Text>
+    <Text >Previsione per i prossimi giorni:</Text>
     {sevenDayForecast.map((day: any) => {
     const dayDate = new Date(day.date);
     const worldDate = format(dayDate, 'EEEE', { locale: it });

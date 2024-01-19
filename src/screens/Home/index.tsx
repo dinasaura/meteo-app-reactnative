@@ -36,7 +36,7 @@ export const StyledScrollView = styled.ScrollView`
   background-color: rgba(242, 242, 246, 1);
 `;
 
-const CityContainer = styled.TouchableOpacity`
+export const CityContainer = styled.TouchableOpacity`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
