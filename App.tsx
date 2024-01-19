@@ -18,6 +18,8 @@ import CityScreen from './src/screens/City';
 import HomeScreen from './src/screens/Home';
 import FavoritesScreen from './src/screens/Favorites';
 import FavoriteProvider from './src/providers/FavoriteProvider';
+import HomeIcon from './src/icons/HomeIcon';
+import FavoriteIcon from './src/icons/FavoriteIcon';
 
 enableScreens();
 
@@ -27,8 +29,16 @@ const Tab = createBottomTabNavigator<MainTabsParamList>();
 export const MainTabs = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} backBehavior="history">
-      <Tab.Screen name="home" component={HomeScreen} />
-      <Tab.Screen name="favorites" component={FavoritesScreen} />
+      <Tab.Screen
+        name="home"
+        component={HomeScreen}
+        options={{tabBarIcon: HomeIcon, title: 'Casa'}}
+      />
+      <Tab.Screen
+        name="favorites"
+        component={FavoritesScreen}
+        options={{tabBarIcon: FavoriteIcon, title: 'Favorite'}}
+      />
     </Tab.Navigator>
   );
 };

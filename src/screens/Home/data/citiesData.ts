@@ -2,13 +2,13 @@ export interface CityDataType {
     id: string;
     name: string;
     country: string;
-    details: Record<string, any>; 
+    details?: Record<string, any>; 
   }
 
 export const citiesData: CityDataType[] = [
-    { id: '1', name: 'Londra', country: 'Regno Unito', details: {} },
-    { id: '2', name: 'Parigi', country: 'Francia', details: {} },
-    { id: '3', name: 'New York', country: "Stati Uniti d'America", details: {} },
-    { id: '4', name: 'Tokyo', country: 'Giappone', details: {} },
-    { id: '5', name: 'Milano', country: 'Italia', details: {} },
+    { id: '1', name: 'London', country: 'United Kingdom', details: {} },
+    { id: '2', name: 'Paris', country: 'France', details: {} },
+    { id: '3', name: 'New York', country: "United States of America", details: {} },
+    { id: '4', name: 'Tokyo', country: 'Japan', details: {} },
+    { id: '5', name: 'Milan', country: 'Italy', details: {} },
   ];

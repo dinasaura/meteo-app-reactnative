@@ -1,17 +1,19 @@
 import styled from 'styled-components/native';
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import Container from '../../components/Container.tsx';
 import {useNavigation} from '@react-navigation/native';
-import {CityDataType, citiesData} from './data/citiesData.ts';
+import { citiesData } from './data/citiesData.ts';
+import MeteoLogoIcon from '../../icons/MeteoLogoIcon.tsx';
+import SearchModal from '../../components/SearchModal.tsx';
 
 export const HeaderSearchWrapper = styled.View`
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
+  height: 50px;
   align-items: center;
-  margin-left: 12px;
-  height: 40px;
+  margin-top: 10px;
 `;
 
 export const SearchWrapper = styled.Pressable`
@@ -19,14 +21,13 @@ export const SearchWrapper = styled.Pressable`
   align-items: center;
   background-color: rgba(120, 120, 128, 0.12);
   border-radius: 12px;
-  padding: 10px;
+  padding: 12px;
   flex: 1;
-  margin-right: 10px;
 `;
 
 export const SearchText = styled.Text`
   font-size: 14px;
-  line-height: 20px;
+  line-height: 18px;
   letter-spacing: 0.04px;
   color: rgba(60, 60, 67, 0.6);
 `;
@@ -35,7 +36,7 @@ export const StyledScrollView = styled.ScrollView`
   background-color: rgba(242, 242, 246, 1);
 `;
 
-export const CityContainer = styled.TouchableOpacity`
+const CityContainer = styled.TouchableOpacity`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
@@ -57,7 +58,9 @@ const CityText = styled.Text`
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const navigateToSearchScreen = () => navigation.navigate('search');
+  const [showSearchModal, setShowSearchModal] = useState(false);
+  const openModal = () => setShowSearchModal(true);
+  const closeModal = () => setShowSearchModal(false);
 
   const navigateToCity = (cityName: string) => () => {
     navigation.navigate('city', {name: cityName});
@@ -67,19 +70,21 @@ const HomeScreen: React.FC = () => {
     <Container>
       <StyledScrollView>
         <HeaderSearchWrapper>
-          <SearchWrapper onPress={navigateToSearchScreen}>
+          <MeteoLogoIcon />
+          <SearchWrapper onPress={openModal}>
             <SearchText>Cerca city ...</SearchText>
           </SearchWrapper>
         </HeaderSearchWrapper>
         <View style={{marginTop: 20}}>
           {citiesData.map(city => (
             <CityContainer key={city.id} onPress={navigateToCity(city.name)}>
-            <CityText>{city.name}</CityText>
-            <CountryText>{city.country}</CountryText>
-          </CityContainer>
+              <CityText>{city.name}</CityText>
+              <CountryText>{city.country}</CountryText>
+            </CityContainer>
           ))}
         </View>
       </StyledScrollView>
+      <SearchModal visible={showSearchModal} onClose={closeModal} />
     </Container>
   );
 };

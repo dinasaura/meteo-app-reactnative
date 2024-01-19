@@ -3,8 +3,8 @@ import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import React from 'react';
 
 const ContainerWrapper = styled.View<{insets: EdgeInsets}>`
+  flex: 1;
   padding-top: ${({insets}) => insets.top}px;
-  padding-bottom: ${({insets}) => insets.bottom}px;
   padding-left: ${({insets}) => insets.left + 20}px;
   padding-right: ${({insets}) => insets.right + 20}px;
 `;
