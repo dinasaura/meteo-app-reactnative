@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components/native';
-import { Modal, Pressable, Text, TextInput, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Modal, Pressable, Text, TextInput, TouchableOpacity } from 'react-native';
 import { IS_IOS, KEYBOARD_BEHAVIOR } from '../costants/index.ts';
 import Container from './Container.tsx';
 import BackIcon from '../icons/BackIcon.tsx';
 import { BackButtonWrapper, BackgroundModal, SearchArea, SearchWrapper } from './styles.tsx';
 import {useNavigation} from '@react-navigation/native';
 import { CityText } from '../screens/styles.tsx';
+import { isNull } from 'util';
 
 const SearchInput = styled(TextInput)`
   color: #000000;
@@ -40,13 +41,14 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
   const navigation = useNavigation();
   const [localQuery, setLocalQuery] = useState('');
   const [autocompleteData, setAutocompleteData] = useState<City[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchCityNames = async (searchTerm: string) => {
+    setLoading(true);
     try {
       const response = await fetch(
         `http://api.weatherapi.com/v1/search.json?key=14a83ea940ef4d45b5b103446240401&q=${searchTerm}`
       );
-
       if (response.ok) {
         const data: City[] = await response.json();
         setAutocompleteData(data);
@@ -55,28 +57,20 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
       }
     } catch (error) {
       console.error('Error fetching city names:');
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchCityData = async () => {
-      try {
         if (localQuery.trim() !== '') {
           await fetchCityNames(localQuery);
         } else {
-          // Se il termine di ricerca è vuoto, azzera l'elenco delle città
           setAutocompleteData([]);
         }
-      } catch (error) {
-        console.error('Error fetching city data:');
-      }
     };
-
-    const debounceTimeout = setTimeout(() => {
-      fetchCityData();
-    }, 300);
-
-    return () => clearTimeout(debounceTimeout);
+    fetchCityData();
   }, [localQuery]);
 
   const onModalShow = () => {
@@ -88,6 +82,12 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
   };
   const navigateToCity = (cityName: string) => () => {
     navigation.navigate('city', {name: cityName});
+    setLocalQuery('');
+    onClose();
+  };
+  const onCloseAction = () => {
+    onClose();
+    setLocalQuery('');
   };
 
   return (
@@ -96,12 +96,12 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
       transparent
       supportedOrientations={['portrait']}
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={onCloseAction}
       onShow={onModalShow}>
       <Container>
         <BackgroundModal>
           <SearchArea>
-            <BackButtonWrapper onPress={onClose}>
+            <BackButtonWrapper onPress={onCloseAction}>
               <BackIcon />
             </BackButtonWrapper>
             <SearchWrapper>
@@ -116,10 +116,11 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
           <AvoidingView behavior={KEYBOARD_BEHAVIOR}>
           <AutocompleteArea keyboardShouldPersistTaps="always">
               {autocompleteData.map((city, index) => (
-                <Pressable key={index} onPress={navigateToCity(city.name)}>
+                <TouchableOpacity key={index} onPress={navigateToCity(city.name)}>
                     <CityText>{city.name}, {city.country}</CityText>
-                </Pressable>
+                </TouchableOpacity>
               ))}
+              {loading && <ActivityIndicator/>}
             </AutocompleteArea>
           </AvoidingView>
         </BackgroundModal>

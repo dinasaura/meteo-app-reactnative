@@ -13,7 +13,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {MainTabsParamList, RootStackParamList} from './src/types';
-import SearchScreen from './src/screens/Search';
 import CityScreen from './src/screens/City';
 import HomeScreen from './src/screens/Home';
 import FavoritesScreen from './src/screens/Favorites';
@@ -64,11 +63,6 @@ function App(): React.JSX.Element {
               })}
               name="city"
               component={CityScreen}
-            />
-            <Stack.Screen
-              name="search"
-              options={{presentation: 'modal'}}
-              component={SearchScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

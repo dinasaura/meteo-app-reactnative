@@ -21,6 +21,7 @@ const FavoritesScreen: React.FC = () => {
   return (
     <Container>
       <FlatList
+        ListEmptyComponent={<CityText>Non ci sono Città preferite</CityText>}
         contentContainerStyle={{marginTop: 20}}
         data={favorites}
         keyExtractor={(item) => item.name}
