@@ -5,8 +5,6 @@ import {FavoritesDataProvider} from '../providers/FavoriteProvider.tsx';
 
 const useFavoritesCities = () => {
   const {favorites, setFavorites} = useContext(FavoritesDataProvider);
-  // Am lasat aici si varinatul fara sa creez context si provider ca sa intelegi de cel el nu lucreaza
-  // const [favorites, setFavorites] = useState<CityDataType[]>([]);
 
   useEffect(() => {
     const setDataFn = async () => {

@@ -7,7 +7,7 @@ export const CityInfoContainer = styled.View`
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  gap:20px;
+  gap: 20px;
   margin-top: 20px;
 `;
 
@@ -24,7 +24,7 @@ export const WeatherDetailsContainer = styled.View`
 export const WeatherDetailsText = styled.Text`
   font-size: 16px;
   margin-bottom: 4px;
-  color: rgba(60, 60, 67, 0.6);;
+  color: rgba(60, 60, 67, 0.6);
 `;
 
 export const ButtonText = styled.Text`
@@ -33,14 +33,14 @@ export const ButtonText = styled.Text`
 `;
 
 export const AddToFavoritesButton = styled.TouchableOpacity`
-padding: 12px;
-border-radius: 5px;
-cursor: pointer;
-font-size: 16px; 
-transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-color: #fff;
-margin-top: 15px;
-cursor: pointer;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  color: #fff;
+  margin-top: 15px;
+  cursor: pointer;
 `;
 
 export const CityContainerSevenDays = styled.View`
@@ -48,14 +48,12 @@ export const CityContainerSevenDays = styled.View`
   align-items: center;
   padding-top: 15px;
   fle: wrap;
-
 `;
 
 export const ContainerAddToFavoritesButtons = styled.View`
   display: flex;
   flex-direction: row;
-  gap: 20px
-
+  gap: 20px;
 `;
 
 export const HeaderSearchWrapper = styled.View`
@@ -101,7 +99,7 @@ export const CountryText = styled.Text`
   font-size: 16px;
   line-height: 16px;
   margin-bottom: 4px;
-  text-transform: uppercase
+  text-transform: uppercase;
 `;
 
 export const CityText = styled.Text`
@@ -112,7 +110,6 @@ export const CityText = styled.Text`
   color: black;
   margin-bottom: 10px;
 `;
-
 
 export const TextDate = styled.Text`
   font-size: 15px;

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import Container from '../../components/Container.tsx';
 import {useNavigation} from '@react-navigation/native';
-import { citiesData } from './data/citiesData.ts';
+import {citiesData} from './data/citiesData.ts';
 import MeteoLogoIcon from '../../icons/MeteoLogoIcon.tsx';
 import SearchModal from '../../components/SearchModal.tsx';
 

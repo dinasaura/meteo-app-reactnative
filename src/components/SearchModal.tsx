@@ -1,13 +1,25 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import styled from 'styled-components/native';
-import { ActivityIndicator, Modal, Pressable, Text, TextInput, TouchableOpacity } from 'react-native';
-import { IS_IOS, KEYBOARD_BEHAVIOR } from '../costants/index.ts';
+import {
+  ActivityIndicator,
+  Modal,
+  Pressable,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import {IS_IOS, KEYBOARD_BEHAVIOR} from '../costants/index.ts';
 import Container from './Container.tsx';
 import BackIcon from '../icons/BackIcon.tsx';
-import { BackButtonWrapper, BackgroundModal, SearchArea, SearchWrapper } from './styles.tsx';
+import {
+  BackButtonWrapper,
+  BackgroundModal,
+  SearchArea,
+  SearchWrapper,
+} from './styles.tsx';
 import {useNavigation} from '@react-navigation/native';
-import { CityText } from '../screens/styles.tsx';
-import { isNull } from 'util';
+import {CityText} from '../screens/styles.tsx';
+import axios from 'axios';
 
 const SearchInput = styled(TextInput)`
   color: #000000;
@@ -36,7 +48,7 @@ type Props = {
   onClose: () => void;
 };
 
-const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
+const SearchModal: React.FC<Props> = ({visible, onClose}) => {
   const searchInputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
   const [localQuery, setLocalQuery] = useState('');
@@ -46,14 +58,18 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
   const fetchCityNames = async (searchTerm: string) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `http://api.weatherapi.com/v1/search.json?key=14a83ea940ef4d45b5b103446240401&q=${searchTerm}`
+      const response = await axios.get(
+        `https://api.weatherapi.com/v1/search.json?key=14a83ea940ef4d45b5b103446240401&q=${searchTerm}`,
       );
-      if (response.ok) {
-        const data: City[] = await response.json();
+      if (response.status === 200) {
+        const data: City[] = response.data;
         setAutocompleteData(data);
       } else {
-        console.error('Error fetching city names:', response.status, response.statusText);
+        console.error(
+          'Error fetching city names:',
+          response.status,
+          response.statusText,
+        );
       }
     } catch (error) {
       console.error('Error fetching city names:');
@@ -61,14 +77,13 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     const fetchCityData = async () => {
-        if (localQuery.trim() !== '') {
-          await fetchCityNames(localQuery);
-        } else {
-          setAutocompleteData([]);
-        }
+      if (localQuery.trim() !== '') {
+        await fetchCityNames(localQuery);
+      } else {
+        setAutocompleteData([]);
+      }
     };
     fetchCityData();
   }, [localQuery]);
@@ -114,13 +129,17 @@ const SearchModal: React.FC<Props> = ({ visible, onClose }) => {
             </SearchWrapper>
           </SearchArea>
           <AvoidingView behavior={KEYBOARD_BEHAVIOR}>
-          <AutocompleteArea keyboardShouldPersistTaps="always">
+            <AutocompleteArea keyboardShouldPersistTaps="always">
               {autocompleteData.map((city, index) => (
-                <TouchableOpacity key={index} onPress={navigateToCity(city.name)}>
-                    <CityText>{city.name}, {city.country}</CityText>
+                <TouchableOpacity
+                  key={index}
+                  onPress={navigateToCity(city.name)}>
+                  <CityText>
+                    {city.name}, {city.country}
+                  </CityText>
                 </TouchableOpacity>
               ))}
-              {loading && <ActivityIndicator/>}
+              {loading && <ActivityIndicator />}
             </AutocompleteArea>
           </AvoidingView>
         </BackgroundModal>
