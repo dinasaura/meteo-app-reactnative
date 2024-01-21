@@ -11,7 +11,6 @@ import {
   CountryText,
 } from '../styles';
 import Container from '../../components/Container';
-import {Text} from 'react-native-svg';
 
 const FavoritesScreen: React.FC = () => {
   const {favorites, removeFavorite} = useFavoritesCities();

@@ -1,12 +1,9 @@
 import React, {useRef, useState, useEffect} from 'react';
-import styled from 'styled-components/native';
 import {
   ActivityIndicator,
   Modal,
-  Pressable,
-  Text,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import {IS_IOS, KEYBOARD_BEHAVIOR} from '../costants/index.ts';
 import Container from './Container.tsx';
@@ -16,27 +13,13 @@ import {
   BackgroundModal,
   SearchArea,
   SearchWrapper,
-} from './styles.tsx';
+  AutocompleteArea,
+  SearchInput,
+  AvoidingView,
+} from './SearchModal.styles.tsx';
 import {useNavigation} from '@react-navigation/native';
 import {CityText} from '../screens/styles.tsx';
 import axios from 'axios';
-
-const SearchInput = styled(TextInput)`
-  color: #000000;
-  flex: 1;
-`;
-
-const AutocompleteArea = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    paddingTop: 30,
-    paddingBottom: 20,
-  },
-})``;
-
-const AvoidingView = styled.KeyboardAvoidingView`
-  flex: 1;
-  height: 100%;
-`;
 
 type City = {
   name: string;

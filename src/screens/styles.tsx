@@ -117,3 +117,12 @@ export const TextDate = styled.Text`
   display: flex;
   align-self: center;
 `;
+
+export const ImageView = styled.Image`
+  width: 64px;
+  height: 64px;
+`;
+
+export const ViewContainer = styled.View`
+  margin-top: 20px;
+`;

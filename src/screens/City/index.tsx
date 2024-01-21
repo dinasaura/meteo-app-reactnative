@@ -6,6 +6,7 @@ import useFavoritesCities from '../../hooks/useFavoritesCities';
 import {CityDataType} from '../Home/data/citiesData';
 import {format} from 'date-fns';
 import it from 'date-fns/locale/it';
+import {apiKey} from '../../costants/apiKey.ts'
 import {
   AddToFavoritesButton,
   ButtonText,
@@ -13,6 +14,7 @@ import {
   CityContainerSevenDays,
   CityInfoContainer,
   CityInfoText,
+  ImageView,
   TextDate,
   WeatherDetailsContainer,
   WeatherDetailsText,
@@ -38,7 +40,15 @@ type WeatherDataStateType = {
   };
 } | null;
 
-const apiKey = '14a83ea940ef4d45b5b103446240401';
+type DayType = {
+  date: string,
+  day: {
+    maxtemp_c: string,
+    mintemp_c: string,
+    condition: {icon: string};
+  };
+};
+
 
 const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
   const {
@@ -93,9 +103,8 @@ const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
               </WeatherDetailsText>
             </View>
             <View>
-              <Image
+              <ImageView
                 source={{uri: `https:${weatherData.current.condition.icon}`}}
-                style={{width: 64, height: 64}}
               />
             </View>
           </CityInfoContainer>
@@ -147,15 +156,14 @@ const CityScreen: React.FC<RootStackScreenProps<'city'>> = ({route}) => {
       {sevenDayForecast && (
         <CityContainerSevenDays>
           <Text>Previsione per i prossimi giorni:</Text>
-          {sevenDayForecast.map((day: any) => {
+          {sevenDayForecast.map((day: DayType) => {
             const dayDate = new Date(day.date);
             const worldDate = format(dayDate, 'EEEE', {locale: it});
             return (
               <CityContainer key={day.date}>
                 <TextDate>{worldDate}</TextDate>
-                <Image
+                <ImageView
                   source={{uri: `https:${day.day.condition.icon}`}}
-                  style={{width: 64, height: 64}}
                 />
                 <Text>Giorno: {day.day.maxtemp_c}°C</Text>
                 <Text>Notte: {day.day.mintemp_c}°C</Text>

@@ -1,9 +1,10 @@
+import { TextInput } from 'react-native';
 import styled from 'styled-components/native';
 
 export const BackgroundModal = styled.View`
   background-color: rgba(242, 242, 246, 1);
   flex: 1;
-  margin-top: 16px;
+  padding-top: 16px;
 `;
 
 export const SearchArea = styled.View`
@@ -22,4 +23,21 @@ export const SearchWrapper = styled.View`
   justify-content: center;
   margin-left: 12px;
   padding: 0 4px;
+`;
+
+export const SearchInput = styled(TextInput)`
+  color: #000000;
+  flex: 1;
+`;
+
+export const AutocompleteArea = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    paddingTop: 30,
+    paddingBottom: 20,
+  },
+})``;
+
+export const AvoidingView = styled.KeyboardAvoidingView`
+  flex: 1;
+  height: 100%;
 `;
